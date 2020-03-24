@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_provider_arch/core/base_widget.dart';
+import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
 import 'package:flutter_provider_arch/ui/widgets/login_header.dart';
 import 'package:flutter_provider_arch/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
@@ -8,36 +10,38 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginViewModel>.value(
-      value: LoginViewModel(
+    return BaseWidget<LoginViewModel>(
+      model: LoginViewModel(
         authenticationService: Provider.of(context),
       ),
-      child: Consumer<LoginViewModel>(
-        child: LoginHeader(
-          controller: controller,
-        ),
-        builder: (BuildContext context, LoginViewModel model, Widget child) {
-          return Scaffold(
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                child,
-                model.busy
-                    ? CircularProgressIndicator()
-                    : FlatButton(
-                        child: Text("Login"),
-                        color: Colors.blue,
-                        onPressed: () {
-                          String value = controller.text;
-                          int userId = int.tryParse(value);
-                          model.login(userId);
-                        },
-                      ),
-              ],
-            ),
-          );
-        },
+      child: LoginHeader(
+        controller: controller,
       ),
+      builder: (BuildContext context, LoginViewModel model, Widget child) {
+        return Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              child,
+              model.busy
+                  ? CircularProgressIndicator()
+                  : FlatButton(
+                      child: Text("Login"),
+                      color: Colors.blue,
+                      onPressed: () async {
+                        String value = controller.text;
+                        int userId = int.tryParse(value);
+                       bool success= await model.login(userId);
+                       if(success){
+                         //todo save the user success data in shared preference
+                         Navigator.of(context).pushNamed(RoutePaths.Home);
+                       }
+                      },
+                    ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

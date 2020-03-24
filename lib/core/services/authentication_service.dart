@@ -13,12 +13,10 @@ class AuthenticationService {
 
   Future<bool> login(int userId) async {
     var fetchedUser = await api.getUserProfile(userId);
-
     var hasUser = fetchedUser != null;
     if (hasUser) {
       _userController.sink.add(fetchedUser);
     }
-
     return hasUser;
   }
 

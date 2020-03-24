@@ -26,6 +26,21 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Recommend places needs your location to do something</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Recommend places needs your location to do something</string>
+
+
+	<key>NSPhotoLibraryUsageDescription </key>
+	<string>Recommend places needs your gallery to do something</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Recommend places needs your camera to do something</string>
+	<key>NSMicrophoneUsageDescription </key>
+	<string>Recommend places needs your microphone to do something</string>
+
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

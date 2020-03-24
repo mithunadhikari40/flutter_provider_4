@@ -7,12 +7,13 @@ class LoginViewModel extends BaseViewModel {
 
   LoginViewModel({this.authenticationService});
 
-  Future login(int userId) async {
+  Future<bool> login(int userId) async {
     setBusy(true);
 
     //noftify the login screen to show progress
-    var response = await authenticationService.login(userId);
+    bool response = await authenticationService.login(userId);
     setBusy(false);
+    return response;
     //notify the login screen to stop showing progress
   }
 }
