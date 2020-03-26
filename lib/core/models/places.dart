@@ -33,4 +33,12 @@ Map<String,dynamic>  toJson() {
       "longitude": longitude
     };
   }
+
+  static List<Place> allPlaces (data){
+    return data
+       .cast<Map<String, dynamic>>()
+       .map((obj) => Place.fromJson(obj))
+       .toList()
+       .cast<Place>();
+  }
 }

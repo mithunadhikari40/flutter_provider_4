@@ -33,8 +33,7 @@ class LoginView extends StatelessWidget {
                         int userId = int.tryParse(value);
                        bool success= await model.login(userId);
                        if(success){
-                         //todo save the user success data in shared preference
-                         Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
+                          Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
                        }
                       },
                     ),

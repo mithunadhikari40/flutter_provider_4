@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
+import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/models/user.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -69,5 +70,29 @@ class DbService {
           )
     """);
     batch.commit();
+  }
+
+  Future<int> insertPlace(Place place) {
+    return db.insert(AppConstants.PLACE_TABLE, place.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<Place> fetchPlace(String id) async {
+    final data = await db
+        .query(AppConstants.PLACE_TABLE, where: 'id = ? ', whereArgs: [id]);
+    if (data.length > 0) {
+      return Place.fromJson(data.first);
+    }
+    return null;
+  }
+
+  Future<List<Place>> fetchAllPlaces() async {
+    final data = await db.query(AppConstants.PLACE_TABLE);
+    return Place.allPlaces(data);
+    // var list = <Place>[];
+    // data.forEach((Map<String, dynamic> t) {
+    //   list.add(Place.fromJson(t));
+    // });
+    // return list;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/models/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,4 +26,22 @@ class Api {
       return null;
     }
   }
+
+  Future<List<Place>> getAllPlace() async{
+    var root = "https://recommend-places-fd237.firebaseio.com/";
+    try{
+      var response = await http.get(root);
+      if(response == null || response.body == null){
+        return null;
+      }
+      var data = jsonDecode(response.body);
+      return Place.allPlaces(data);
+    
+    }catch(e){
+      print("Firebase error $e");
+      return null;
+    }
+    
+  }
+
 }
