@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/core/base_widget.dart';
+import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
 import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,9 @@ class HomeView extends StatelessWidget {
       BuildContext context, HomeViewViewModel model) {
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed(RoutePaths.AddNewPlace);
+      },
     );
   }
 }

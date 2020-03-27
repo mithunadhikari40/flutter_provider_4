@@ -15,7 +15,6 @@ class HomeViewService {
   getAllPlacesFromLocal() async {
     final data = await dbService.fetchAllPlaces();
     _places.addAll(data);
-
   }
   getAllPlacesFromServer() async {
     final data = await api.getAllPlace();
