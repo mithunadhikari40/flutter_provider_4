@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
-final Function(String) onImageTaken;
+  final Function(String) onImageTaken;
 
-ImageInput({this.onImageTaken});
+  ImageInput({this.onImageTaken});
 
   @override
   _ImageInputState createState() => _ImageInputState();
@@ -24,24 +24,28 @@ class _ImageInputState extends State<ImageInput> {
             flex: 1,
             child: image == null ? Text("No Image taken") : Image.file(image),
           ),
+          SizedBox(
+            width: 16,
+          ),
           Expanded(
-              flex: 1,
-              child: FlatButton.icon(
-                color: Colors.blue[500],
-                onPressed: _takePicture,
-                icon: Icon(Icons.camera),
-                label: Text("Take picture"),
-              )),
+            flex: 1,
+            child: FlatButton.icon(
+              onPressed: _takePicture,
+              color: Colors.blue[200],
+              icon: Icon(Icons.camera),
+              label: Text("Take picture"),
+            ),
+          ),
         ],
       ),
     );
   }
 
   void _takePicture() async {
-    var file = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if(file!= null){
+    var file = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (file != null) {
       setState(() {
-        image= file;
+        image = file;
       });
 
       widget.onImageTaken(file.absolute.path);

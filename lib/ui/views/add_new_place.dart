@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/ui/widgets/image_input.dart';
+import 'package:flutter_provider_arch/ui/widgets/location_input.dart';
 
 class AddNewPlace extends StatefulWidget {
   @override
@@ -24,6 +25,8 @@ class _AddNewPlaceState extends State<AddNewPlace> {
             ImageInput(
               onImageTaken: _onImageTaken,
             ),
+            LocationInput(),
+            
           ],
         ),
       ),
@@ -34,6 +37,11 @@ class _AddNewPlaceState extends State<AddNewPlace> {
     return TextField(
       controller: _titleController,
       decoration: InputDecoration(
+         border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(),
+          ),
+         prefixIcon: Icon(Icons.my_location),
         hintText: 'Kathmandu',
         labelText: 'Enter a place name',
       ),
