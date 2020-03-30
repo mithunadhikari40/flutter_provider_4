@@ -1,10 +1,16 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
+import 'package:flutter_provider_arch/utils/location_helper.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class LocationInput extends StatefulWidget {
+  final Function(LocationData locationData) onLocationSelected;
+
+  const LocationInput({this.onLocationSelected});
   @override
   _LocationInputState createState() => _LocationInputState();
 }
@@ -110,14 +116,31 @@ class _LocationInputState extends State<LocationInput> {
     _locationData = await location.getLocation();
     //todo gererate an static image from mapbox
     print("Current location $_locationData");
+
+    setState(() {
+      staticImagePath = LocationHelper.generateStaticImage(
+          _locationData.latitude, _locationData.longitude);
+    });
+    widget.onLocationSelected(_locationData);
   }
 
   void _gotoMapScreen(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(RoutePaths.MapInput, arguments: _locationData);
+    Navigator.of(context).pushNamed(RoutePaths.MapInput,
+        arguments: [_locationData, true, _onSelectLocationFromMap]);
   }
 
   void updateLocation(LocationData location) {
     _locationData = location;
+  }
+
+  void _onSelectLocationFromMap(LatLng latLng) {
+    setState(() {
+      staticImagePath =
+          LocationHelper.generateStaticImage(latLng.latitude, latLng.longitude);
+    });
+    _locationData = LocationData.fromMap(
+        {"latitude": latLng.latitude, "longitude": latLng.longitude});
+
+    widget.onLocationSelected(_locationData);
   }
 }

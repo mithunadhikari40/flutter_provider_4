@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/ui/widgets/image_input.dart';
 import 'package:flutter_provider_arch/ui/widgets/location_input.dart';
+import 'package:location/location.dart';
 
 class AddNewPlace extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class AddNewPlace extends StatefulWidget {
 class _AddNewPlaceState extends State<AddNewPlace> {
   final _titleController = TextEditingController();
   String imagePath;
+  LocationData location;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,8 @@ class _AddNewPlaceState extends State<AddNewPlace> {
             ImageInput(
               onImageTaken: _onImageTaken,
             ),
-            LocationInput(),
-            
+            LocationInput(onLocationSelected: _onLocationSelected),
+            _buildSaveButton()
           ],
         ),
       ),
@@ -37,11 +39,11 @@ class _AddNewPlaceState extends State<AddNewPlace> {
     return TextField(
       controller: _titleController,
       decoration: InputDecoration(
-         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(),
-          ),
-         prefixIcon: Icon(Icons.my_location),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(),
+        ),
+        prefixIcon: Icon(Icons.my_location),
         hintText: 'Kathmandu',
         labelText: 'Enter a place name',
       ),
@@ -51,5 +53,26 @@ class _AddNewPlaceState extends State<AddNewPlace> {
   _onImageTaken(String image) {
     imagePath = image;
     //assign this value to a local variable
+  }
+
+  _onLocationSelected(LocationData locationData) {
+    location = locationData;
+  }
+
+  Widget _buildSaveButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: double.infinity,
+        color: Colors.blue[500],
+        child: FlatButton.icon(
+          onPressed: () {
+            
+          },
+          icon: Icon(Icons.save),
+          label: Text("Save"),
+        ),
+      ),
+    );
   }
 }

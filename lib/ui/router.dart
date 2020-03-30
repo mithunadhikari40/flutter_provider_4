@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_provider_arch/ui/views/add_new_place.dart';
 import 'package:flutter_provider_arch/ui/views/home_view.dart';
 import 'package:flutter_provider_arch/ui/views/login_view.dart';
 import 'package:flutter_provider_arch/ui/widgets/map_input.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';  
 
 class Router {
@@ -17,9 +20,17 @@ class Router {
         case RoutePaths.AddNewPlace:
         return MaterialPageRoute(builder: (_) => AddNewPlace());
         case RoutePaths.MapInput:
-        LocationData locationData = settings.arguments as LocationData;
+
+        List args = settings.arguments as List;
+
+        LocationData locationData = args[0];
+        bool shouldShowIcon = args[1];
+        Function(LatLng latlng) onSelectLocation = args[2];
+
         return MaterialPageRoute(builder: (_) => MapInput(
           locationData: locationData,
+          shouldShowIcon: shouldShowIcon,
+          onSelectLocation: onSelectLocation,
         ));
        default:
         return MaterialPageRoute(
