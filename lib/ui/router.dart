@@ -7,6 +7,7 @@ import 'package:flutter_provider_arch/ui/views/add_new_place.dart';
 import 'package:flutter_provider_arch/ui/views/home_view.dart';
 import 'package:flutter_provider_arch/ui/views/login_view.dart';
 import 'package:flutter_provider_arch/ui/widgets/map_input.dart';
+import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';  
 
@@ -18,7 +19,10 @@ class Router {
       case RoutePaths.Login:
         return MaterialPageRoute(builder: (_) => LoginView());
         case RoutePaths.AddNewPlace:
-        return MaterialPageRoute(builder: (_) => AddNewPlace());
+        HomeViewViewModel model = settings.arguments as HomeViewViewModel;
+        return MaterialPageRoute(builder: (_) => AddNewPlace(
+          model: model,
+        ));
         case RoutePaths.MapInput:
 
         List args = settings.arguments as List;

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/ui/widgets/image_input.dart';
 import 'package:flutter_provider_arch/ui/widgets/location_input.dart';
+import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:location/location.dart';
 
 class AddNewPlace extends StatefulWidget {
+  final HomeViewViewModel model;
+
+  const AddNewPlace({this.model});
   @override
   _AddNewPlaceState createState() => _AddNewPlaceState();
 }
@@ -28,7 +33,7 @@ class _AddNewPlaceState extends State<AddNewPlace> {
               onImageTaken: _onImageTaken,
             ),
             LocationInput(onLocationSelected: _onLocationSelected),
-            _buildSaveButton()
+            _buildSaveButton(context)
           ],
         ),
       ),
@@ -59,7 +64,7 @@ class _AddNewPlaceState extends State<AddNewPlace> {
     location = locationData;
   }
 
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -67,12 +72,24 @@ class _AddNewPlaceState extends State<AddNewPlace> {
         color: Colors.blue[500],
         child: FlatButton.icon(
           onPressed: () {
-            
+            savePlace(context);
           },
           icon: Icon(Icons.save),
           label: Text("Save"),
         ),
       ),
     );
+  }
+
+  void savePlace(BuildContext context) {
+    if (_titleController.text.isEmpty ||
+        imagePath == null ||
+        location == null) {
+      Fluttertoast.showToast(msg: "Please fill all the data");
+      return;
+    }
+    widget.model.insertPlace(_titleController.text, imagePath, location);
+
+    Navigator.of(context).pop();
   }
 }

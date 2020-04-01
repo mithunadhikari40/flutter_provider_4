@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/core/base_widget.dart';
 import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
+import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class HomeView extends StatelessWidget {
               ],
             ),
             floatingActionButton: _buildFloatingActionButton(context, model),
-            body: Center(child: Text('Home View')));
+            body: _buiildBody(model, context));
       },
     );
   }
@@ -50,8 +51,19 @@ class HomeView extends StatelessWidget {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () {
-        Navigator.of(context).pushNamed(RoutePaths.AddNewPlace);
+        Navigator.of(context)
+            .pushNamed(RoutePaths.AddNewPlace, arguments: model);
       },
     );
+  }
+
+  Widget _buiildBody(HomeViewViewModel model, BuildContext context) {
+    if (model.busy) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (model.places.length == 0) {
+      return Center(child: Text("No items"));
+    }
+    return Center(child: Text("${model.places.length}"));
   }
 }

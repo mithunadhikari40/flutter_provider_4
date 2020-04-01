@@ -35,7 +35,7 @@ class DbService {
             address TEXT,
             imagePath TEXT,
             latitude REAL,
-            longiture REAL
+            longitude REAL
           )
     """);
 
@@ -66,7 +66,7 @@ class DbService {
             address TEXT,
             imagePath TEXT,
             latitude REAL,
-            longiture REAL
+            longitude REAL
           )
     """);
     batch.commit();

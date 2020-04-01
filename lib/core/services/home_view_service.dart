@@ -20,4 +20,9 @@ class HomeViewService {
     final data = await api.getAllPlace();
     _places.addAll(data); 
   }
+
+  insertPlace(Place place){
+    _places.add(place);
+    dbService.insertPlace(place);
+  }
 }

@@ -42,7 +42,7 @@ class _ImageInputState extends State<ImageInput> {
   }
 
   void _takePicture() async {
-    var file = await ImagePicker.pickImage(source: ImageSource.camera);
+    var file = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (file != null) {
       setState(() {
         image = file;
