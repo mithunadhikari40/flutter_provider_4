@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 /// The service responsible for networking requests
 class Api {
   static const endpoint = 'https://jsonplaceholder.typicode.com';
+      var root = "https://recommend-places-fd237.firebaseio.com/places.json";
+
 
   var client = new http.Client();
 
@@ -28,7 +30,6 @@ class Api {
   }
 
   Future<List<Place>> getAllPlace() async{
-    var root = "https://recommend-places-fd237.firebaseio.com/";
     try{
       var response = await http.get(root);
       if(response == null || response.body == null){
@@ -41,7 +42,19 @@ class Api {
       print("Firebase error $e");
       return null;
     }
-    
   }
+    Future postData(Place place) async{
+      try{
+        var response = await http.post(root,body:jsonEncode(place.toJson()));
+        print(response.body);
+
+
+      }catch(e){
+
+      }
+
+    }
+    
+  
 
 }

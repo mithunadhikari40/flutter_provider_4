@@ -1,3 +1,5 @@
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/services/home_view_service.dart';
 import 'package:flutter_provider_arch/utils/location_helper.dart';
@@ -7,12 +9,16 @@ import 'package:location/location.dart';
 class HomeViewViewModel extends BaseViewModel {
   final HomeViewService homeViewService;
 
-  HomeViewViewModel({this.homeViewService});
+  HomeViewViewModel({this.homeViewService}) {
+    checkConnection();
+  }
+  bool _isConnected = false;
+  bool get isConnected =>_isConnected;
 
   getAllPlaces() async {
     setBusy(true);
     homeViewService.getAllPlacesFromLocal();
-     homeViewService.getAllPlacesFromServer();
+    //  homeViewService.getAllPlacesFromServer();
     setBusy(false);
   }
 
@@ -35,4 +41,15 @@ class HomeViewViewModel extends BaseViewModel {
   }
 
   List<Place> get places => homeViewService.places;
+
+  void checkConnection() {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result){
+      _isConnected = result != ConnectivityResult.none;
+      notifyListeners();
+     });
+  }
+
+  Future<void> postData(List<Place> places) async {
+    await homeViewService.postData(places);
+  }
 }

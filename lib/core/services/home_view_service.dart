@@ -18,11 +18,17 @@ class HomeViewService {
   }
   getAllPlacesFromServer() async {
     final data = await api.getAllPlace();
+    if(data!=null)
     _places.addAll(data); 
   }
 
   insertPlace(Place place){
     _places.add(place);
     dbService.insertPlace(place);
+  }
+  postData(List<Place> places) async {
+    for(var pl in places){
+     await api.postData(pl);
+    }
   }
 }
