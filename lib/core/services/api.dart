@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 /// The service responsible for networking requests
 class Api {
   static const endpoint = 'https://jsonplaceholder.typicode.com';
-      var root = "https://recommend-places-fd237.firebaseio.com/places.json";
-
+  var root = "https://recommend-places-fd237.firebaseio.com/places.json";
 
   var client = new http.Client();
 
@@ -18,7 +17,7 @@ class Api {
       var response = await client.get('$endpoint/users/$userId');
       print("Response ${response.body}");
       final data = jsonDecode(response.body);
-      if(data["id"]== null){
+      if (data["id"] == null) {
         return null;
       }
       // Convert and return
@@ -29,32 +28,32 @@ class Api {
     }
   }
 
-  Future<List<Place>> getAllPlace() async{
-    try{
+  Future<List<Place>> getAllPlace() async {
+    try {
       var response = await http.get(root);
-      if(response == null || response.body == null){
+      print("Response from server ${response.body}");
+      if (response == null || response.body == null) {
         return null;
       }
-      var data = jsonDecode(response.body);
-      return Place.allPlaces(data);
-    
-    }catch(e){
+      Map<String,dynamic> data = jsonDecode(response.body);
+      var values = data.values.toList();
+      print("the decoded data $values");
+
+      return Place.allPlaces(values);
+    } catch (e) {
       print("Firebase error $e");
       return null;
     }
   }
-    Future postData(Place place) async{
-      try{
-        var response = await http.post(root,body:jsonEncode(place.toJson()));
-        print(response.body);
 
+  Future postData(Place place) async {
+    try {
+      var response = await http.post(root, body: jsonEncode(place.toJson()));
+      print("${response.body} and status code ${response.statusCode}" );
 
-      }catch(e){
-
-      }
-
+      return jsonDecode(response.body);
+    } catch (e) {
+      return null;
     }
-    
-  
-
+  }
 }

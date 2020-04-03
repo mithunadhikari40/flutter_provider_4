@@ -5,6 +5,7 @@ class Place {
   String imagePath;
   double latitude;
   double longitude;
+  int synced = 0;
 
   Place(
       {this.id,
@@ -12,7 +13,7 @@ class Place {
       this.address,
       this.imagePath,
       this.latitude,
-      this.longitude});
+      this.longitude,this.synced});
 
   Place.fromJson(Map<String, dynamic> map) {
     id = map["id"];
@@ -21,6 +22,7 @@ class Place {
     imagePath = map["imagePath"];
     latitude = map["latitude"];
     longitude = map["longitude"];
+    synced= map["synced"];
   }
 
 Map<String,dynamic>  toJson() {
@@ -30,7 +32,8 @@ Map<String,dynamic>  toJson() {
       "address": address,
       "imagePath": imagePath,
       "latitude": latitude,
-      "longitude": longitude
+      "longitude": longitude,
+      "synced": synced,
     };
   }
 

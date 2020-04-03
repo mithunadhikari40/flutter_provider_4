@@ -15,7 +15,7 @@ class DbService {
   Future _init() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, AppConstants.DB_NAME);
-    db = await openDatabase(path, version: 2,
+    db = await openDatabase(path, version: 3,
         onCreate: (Database newDb, int newVersion) {
       Batch batch = newDb.batch();
       batch.execute("""
@@ -38,6 +38,8 @@ class DbService {
             longitude REAL
           )
     """);
+      batch.execute(
+          """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
 
       batch.commit();
     }, onUpgrade: _onDbUpgrade);
@@ -58,7 +60,8 @@ class DbService {
 
   Future _onDbUpgrade(Database newDb, int oldVersion, int newVersion) async {
     Batch batch = newDb.batch();
-    batch.execute("""
+    if (oldVersion == 1 && newVersion == 2) {
+      batch.execute("""
           CREATE TABLE ${AppConstants.PLACE_TABLE}
           (
             id TEXT PRIMARY KEY,
@@ -69,6 +72,12 @@ class DbService {
             longitude REAL
           )
     """);
+    }
+    if (oldVersion == 2 && newVersion == 3) {
+      batch.execute(
+          """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
+    }
+
     batch.commit();
   }
 
@@ -89,10 +98,23 @@ class DbService {
   Future<List<Place>> fetchAllPlaces() async {
     final data = await db.query(AppConstants.PLACE_TABLE);
     return Place.allPlaces(data);
-    // var list = <Place>[];
-    // data.forEach((Map<String, dynamic> t) {
-    //   list.add(Place.fromJson(t));
-    // });
-    // return list;
+  }
+
+  Future<List<Place>> fetchAllUnsyncedPlaces() async {
+    final data = await db
+        .query(AppConstants.PLACE_TABLE, where: " synced = ?", whereArgs: [0]);
+    if (data.length > 0) return Place.allPlaces(data);
+    return null;
+  }
+
+  Future updateData(Place place, String newId) async {
+//  return db.rawUpdate("UPDATE  ${AppConstants.PLACE_TABLE} SET synced = 1, id = $newId where id = ${place.id}");
+
+    var oldId = place.id;
+    place.id = newId;
+    place.synced = 1;
+   return db.update(AppConstants.PLACE_TABLE, place.toJson(),
+        where: 'id = ?', whereArgs: [oldId]);
+
   }
 }

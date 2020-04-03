@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.sync),
       onPressed: () {
-        model.postData(model.places);
+        model.postData();
       },
     );
   }

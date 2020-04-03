@@ -1,6 +1,7 @@
 import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/services/api.dart';
 import 'package:flutter_provider_arch/core/services/db_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeViewService {
   final Api api;
@@ -20,15 +21,25 @@ class HomeViewService {
     final data = await api.getAllPlace();
     if(data!=null)
     _places.addAll(data); 
+    //todo insert the data into our local db
+    //todo make the synced parameter as 1
   }
 
-  insertPlace(Place place){
+ void insertPlace(Place place){
     _places.add(place);
     dbService.insertPlace(place);
   }
-  postData(List<Place> places) async {
-    for(var pl in places){
-     await api.postData(pl);
+ Future postData() async {
+   List<Place> allPlace =await  dbService.fetchAllUnsyncedPlaces();
+   if(allPlace== null){
+     Fluttertoast.showToast(msg: "Nothing to sync");
+     return ;
+   }
+    for(var pl in allPlace){
+    var response = await api.postData(pl);
+    String newId = response["name"];
+    dbService.updateData(pl,newId);
+  
     }
   }
 }

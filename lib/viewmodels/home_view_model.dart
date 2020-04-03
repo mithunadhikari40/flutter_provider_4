@@ -17,8 +17,8 @@ class HomeViewViewModel extends BaseViewModel {
 
   getAllPlaces() async {
     setBusy(true);
-    homeViewService.getAllPlacesFromLocal();
-    //  homeViewService.getAllPlacesFromServer();
+   await homeViewService.getAllPlacesFromLocal();
+   await  homeViewService.getAllPlacesFromServer();
     setBusy(false);
   }
 
@@ -49,7 +49,7 @@ class HomeViewViewModel extends BaseViewModel {
      });
   }
 
-  Future<void> postData(List<Place> places) async {
-    await homeViewService.postData(places);
+  Future<void> postData() async {
+    await homeViewService.postData();
   }
 }
