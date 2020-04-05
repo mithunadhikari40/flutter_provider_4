@@ -20,6 +20,7 @@ class _AddNewPlaceState extends State<AddNewPlace> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Add new place'),
@@ -92,4 +93,6 @@ class _AddNewPlaceState extends State<AddNewPlace> {
 
     Navigator.of(context).pop();
   }
+
+   
 }

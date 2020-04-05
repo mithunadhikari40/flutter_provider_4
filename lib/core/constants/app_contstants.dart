@@ -7,6 +7,7 @@ class RoutePaths {
   static const String Home = '/';
   static const String AddNewPlace = 'add_new_place';
   static const String MapInput = 'map_input';
+  static const String PlaceDetail ='place_detail';
   
 }
 

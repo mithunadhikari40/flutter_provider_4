@@ -20,35 +20,44 @@ class _ImageInputState extends State<ImageInput> {
       height: 200,
       child: Row(
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: image == null ? Text("No Image taken") : Image.file(image),
-          ),
-          SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            flex: 1,
-            child: FlatButton.icon(
-              onPressed: _takePicture,
-              color: Colors.blue[200],
-              icon: Icon(Icons.camera),
-              label: Text("Take picture"),
-            ),
-          ),
+          ...getChildren(context),
         ],
       ),
     );
   }
 
-  void _takePicture() async {
+  void _takePicture(BuildContext context) async {
+    FocusScope.of(context).unfocus(focusPrevious: true);
+
     var file = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (file != null) {
       setState(() {
         image = file;
       });
-
       widget.onImageTaken(file.absolute.path);
     }
+  }
+
+  List<Widget> getChildren(BuildContext context) {
+    var list = <Widget>[];
+    list.add(Expanded(
+      flex: 1,
+      child: image == null ? Text("No Image taken") : Image.file(image),
+    ));
+    list.add(SizedBox(
+      width: 16,
+    ));
+    list.add(Expanded(
+      flex: 1,
+      child: FlatButton.icon(
+        onPressed: () {
+          _takePicture(context);
+        },
+        color: Colors.blue[200],
+        icon: Icon(Icons.camera),
+        label: Text("Take picture"),
+      ),
+    ));
+    return list;
   }
 }

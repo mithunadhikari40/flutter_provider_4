@@ -14,7 +14,22 @@ class MapInput extends StatefulWidget {
 
 class _MapInputState extends State<MapInput> {
   Set<Marker> markers = {};
+
+
+  
   LatLng _tappedLocation;
+
+
+  initState(){
+    super.initState();
+      Marker marker =
+        Marker(markerId: MarkerId(widget.locationData.toString()), position: LatLng(widget.locationData.latitude,widget.locationData.longitude));
+    setState(() {
+      markers.clear();
+      markers.add(marker);
+    });
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
