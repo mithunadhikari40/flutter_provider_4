@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart' ;
 import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+
 
 /// The service responsible for networking requests
 class Api {
@@ -46,7 +49,11 @@ class Api {
     }
   }
 
+
   Future postData(Place place) async {
+
+// var uploadedImage = await uploadImage(place.imagePath);
+
     try {
       var response = await http.post(root, body: jsonEncode(place.toJson()));
       print("${response.body} and status code ${response.statusCode}" );
@@ -56,4 +63,17 @@ class Api {
       return null;
     }
   }
+
+ Future<String> uploadImage(String imagePath) async {
+   final dio= Dio();
+   FormData formData = FormData.fromMap({
+     "key":"67e231173a8282ffb9093898968ce731",
+     "iamge": MultipartFile.fromFile(imagePath,
+          filename: "image.jpg", contentType: MediaType('image', 'jpeg')),
+   });
+   var response = await dio.post("https://api.imgbb.com/1/upload",data: formData);
+   print("Dio response $response");
+   return null;
+
+ }
 }

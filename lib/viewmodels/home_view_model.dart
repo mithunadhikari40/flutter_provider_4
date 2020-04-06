@@ -35,6 +35,7 @@ class HomeViewViewModel extends BaseViewModel {
         imagePath: imagePath,
         title: title,
         latitude: location.latitude,
+        synced: 0,
         longitude: location.longitude);
     homeViewService.insertPlace(place);
     setBusy(false);

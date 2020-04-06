@@ -17,29 +17,44 @@ class HomeViewService {
     final data = await dbService.fetchAllPlaces();
     _places.addAll(data);
   }
+
   getAllPlacesFromServer() async {
     final data = await api.getAllPlace();
-    if(data!=null)
-    _places.addAll(data); 
+
+    if (data != null) {
+      for (var da in data) {
+        _places.removeWhere((Place place) {
+          return place.id == da.id;
+        });
+      }
+
+      _places.addAll(data);
+      _places = _places.toSet().toList();
+
+      for (var place in data) {
+        place.synced = 1;
+        dbService.insertPlace(place);
+      }
+    }
     //todo insert the data into our local db
     //todo make the synced parameter as 1
   }
 
- void insertPlace(Place place){
+  void insertPlace(Place place) {
     _places.add(place);
     dbService.insertPlace(place);
   }
- Future postData() async {
-   List<Place> allPlace =await  dbService.fetchAllUnsyncedPlaces();
-   if(allPlace== null){
-     Fluttertoast.showToast(msg: "Nothing to sync");
-     return ;
-   }
-    for(var pl in allPlace){
-    var response = await api.postData(pl);
-    String newId = response["name"];
-    dbService.updateData(pl,newId);
-  
+
+  Future postData() async {
+    List<Place> allPlace = await dbService.fetchAllUnsyncedPlaces();
+    if (allPlace == null) {
+      Fluttertoast.showToast(msg: "Nothing to sync");
+      return;
+    }
+    for (var pl in allPlace) {
+      var response = await api.postData(pl);
+      String newId = response["name"];
+      dbService.updateData(pl, newId);
     }
   }
 }

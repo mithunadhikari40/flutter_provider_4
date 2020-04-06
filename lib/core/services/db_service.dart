@@ -102,7 +102,8 @@ class DbService {
 
   Future<List<Place>> fetchAllUnsyncedPlaces() async {
     final data = await db
-        .query(AppConstants.PLACE_TABLE, where: " synced = ?", whereArgs: [0]);
+        .query(AppConstants.PLACE_TABLE, where: " synced = ? ", whereArgs: [0]);
+        print("The data from local db $data");
     if (data.length > 0) return Place.allPlaces(data);
     return null;
   }
