@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_provider_arch/utils/image_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
@@ -30,7 +31,10 @@ class _ImageInputState extends State<ImageInput> {
     FocusScope.of(context).unfocus(focusPrevious: true);
 
     var file = await ImagePicker.pickImage(source: ImageSource.gallery);
+
     if (file != null) {
+      //todo compress the file
+      file = await ImageHelper.compressImage(file.absolute.path, file);
       setState(() {
         image = file;
       });

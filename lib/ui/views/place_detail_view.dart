@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
 import 'package:flutter_provider_arch/core/models/places.dart';
+import 'package:flutter_provider_arch/utils/image_helper.dart';
 import 'package:location/location.dart';
 
 class PlaceDetailView extends StatelessWidget {
@@ -21,7 +23,18 @@ class PlaceDetailView extends StatelessWidget {
             expandedHeight: 150,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(place.title),
-              background: Image.file(File(place.imagePath),fit: BoxFit.cover,),
+              background: Hero(
+                tag: place.id,
+                child: ImageHelper.imageExists(place.imagePath)
+                    ? Image.file(
+                        File(place.imagePath),
+                        fit: BoxFit.cover,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: place.imagePath,
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ),
           ),
           SliverList(
@@ -54,18 +67,20 @@ class PlaceDetailView extends StatelessWidget {
       ),
     );
   }
-   Widget _buildMapSection(BuildContext context) {
+
+  Widget _buildMapSection(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.of(context).pushNamed(RoutePaths.MapInput,
-        arguments: [LocationData.fromMap({"latitude":place.latitude,"longitude":place.longitude}),
-         false, null]);
-
+      onTap: () {
+        Navigator.of(context).pushNamed(RoutePaths.MapInput, arguments: [
+          LocationData.fromMap(
+              {"latitude": place.latitude, "longitude": place.longitude}),
+          false,
+          null
+        ]);
       },
-          child: Container(
-            margin: EdgeInsets.all(16),
-                  alignment: Alignment.center,
-
+      child: Container(
+        margin: EdgeInsets.all(16),
+        alignment: Alignment.center,
         child: Text(
           "View on map",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

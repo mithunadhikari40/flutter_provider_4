@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/core/models/places.dart';
+import 'package:flutter_provider_arch/utils/image_helper.dart';
 
 class HomeItemTile extends StatelessWidget {
   final Place place;
@@ -16,8 +18,15 @@ class HomeItemTile extends StatelessWidget {
       },
       title: Text(place.title),
       subtitle: Text(place.address),
-      leading: CircleAvatar(
-        backgroundImage: FileImage(File(place.imagePath))
+      leading: Hero(
+        tag:place.id,
+              child: CircleAvatar(
+
+          backgroundImage: 
+          ImageHelper.imageExists(place.imagePath) ? 
+          FileImage(File(place.imagePath)):
+          CachedNetworkImageProvider(place.imagePath,),
+        ),
       ),
     );
   }

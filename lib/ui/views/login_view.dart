@@ -4,6 +4,7 @@ import 'package:flutter_provider_arch/core/constants/app_contstants.dart';
 import 'package:flutter_provider_arch/ui/widgets/login_header.dart';
 import 'package:flutter_provider_arch/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatelessWidget {
   final controller = TextEditingController();
@@ -32,7 +33,10 @@ class LoginView extends StatelessWidget {
                         String value = controller.text;
                         int userId = int.tryParse(value);
                        bool success= await model.login(userId);
+                      
                        if(success){
+                          SharedPreferences preferences =await  SharedPreferences.getInstance();
+                       preferences.setBool(AppConstants.LOGIN_KEY, success);
                           Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
                        }
                       },

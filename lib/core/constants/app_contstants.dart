@@ -15,5 +15,6 @@ class AppConstants{
   static const String USER_TABLE = 'users';
   static const String PLACE_TABLE = 'places';
   static const String DB_NAME = 'places2233.db';
+  static const String LOGIN_KEY ='login_key';
 
 }
