@@ -46,6 +46,9 @@ class DbService {
   }
 
   Future<User> fetchUser() async {
+    if(db == null){
+      await _init();
+    }
     final data = await db.query(AppConstants.USER_TABLE);
     if (data.length < 1) {
       return null;
@@ -81,12 +84,18 @@ class DbService {
     batch.commit();
   }
 
-  Future<int> insertPlace(Place place) {
+  Future<int> insertPlace(Place place) async {
+    if(db == null){
+      await _init();
+    }
     return db.insert(AppConstants.PLACE_TABLE, place.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<Place> fetchPlace(String id) async {
+    if(db == null){
+      await _init();
+    }
     final data = await db
         .query(AppConstants.PLACE_TABLE, where: 'id = ? ', whereArgs: [id]);
     if (data.length > 0) {
@@ -96,11 +105,17 @@ class DbService {
   }
 
   Future<List<Place>> fetchAllPlaces() async {
+    if(db == null){
+      await _init();
+    }
     final data = await db.query(AppConstants.PLACE_TABLE);
     return Place.allPlaces(data);
   }
 
   Future<List<Place>> fetchAllUnsyncedPlaces() async {
+    if(db == null){
+      await _init();
+    }
     final data = await db
         .query(AppConstants.PLACE_TABLE, where: " synced = ? ", whereArgs: [0]);
         print("The data from local db $data");
@@ -109,6 +124,9 @@ class DbService {
   }
 
   Future updateData(Place place, String newId) async {
+    if(db == null){
+      await _init();
+    }
 //  return db.rawUpdate("UPDATE  ${AppConstants.PLACE_TABLE} SET synced = 1, id = $newId where id = ${place.id}");
 
     var oldId = place.id;

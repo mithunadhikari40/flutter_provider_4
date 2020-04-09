@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -17,6 +20,8 @@ class _MapInputState extends State<MapInput> {
   Set<Marker> markers = {};
 
   LatLng _tappedLocation;
+
+  Set<Polyline> _polyLines = {};
   @override
   initState() {
     super.initState();
@@ -28,6 +33,7 @@ class _MapInputState extends State<MapInput> {
       markers.clear();
       markers.add(marker);
     });
+    drawPolyLines();
   }
 
   @override
@@ -57,6 +63,7 @@ class _MapInputState extends State<MapInput> {
         ),
         onTap: _onMapTap,
         markers: markers,
+        polylines: _polyLines,
       ),
     );
   }
@@ -73,6 +80,43 @@ class _MapInputState extends State<MapInput> {
       markers.clear();
       markers.add(marker);
     });
+  }
+
+  void drawPolyLines() async {
+    List<LatLng> positions = await getRouteCoordinatesFromMapBox();
+    setState(() {
+      _polyLines.add(Polyline(
+        polylineId: PolylineId(
+          positions.toString(),
+        ),
+        points: positions,
+        width: 10,
+        color: Colors.red,
+        endCap: Cap.buttCap,
+        startCap: Cap.roundCap
+      ));
+    });
+  }
+
+  Future<List<LatLng>> getRouteCoordinatesFromMapBox() async {
+    LatLng l1 = LatLng(27.6716422, 85.313211);
+    LatLng l2 = LatLng(27.6952267, 85.3261583);
+    String url =
+        "https://api.mapbox.com/directions/v5/mapbox/driving/${l1.longitude},${l1.latitude};${l2.longitude},${l2.latitude}?geometries=geojson&access_token=pk.eyJ1IjoiYWRoaWthcmktbWl0aHVuIiwiYSI6ImNqeWU5MzZ6bjB6YXozbnM1YWcxdW1nNmoifQ.HrgzxoSLBUjpdiMIS0Kusg";
+    Response response = await get(url);
+
+    Map values = jsonDecode(response.body);
+
+    List<dynamic> other =
+        values["routes"][0]["geometry"]["coordinates"] as List<dynamic>;
+
+    List<LatLng> list = [];
+
+    other?.forEach((val) {
+      if (val != null) list.add((LatLng(val[1], val[0])));
+    });
+
+    return list;
   }
 }
 

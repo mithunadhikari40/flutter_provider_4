@@ -82,4 +82,19 @@ class Api {
       return null;
     }
   }
+
+ Future<bool> deleteItem(String id) async {
+   final deleteUrl ="https://recommend-places-fd237.firebaseio.com/places/$id.json";
+   try{
+     final response = await http.delete(deleteUrl,);
+     print("The delete response ${response.body}");
+     if(response.statusCode == 200){
+       return true;
+     }
+     return false;
+   }catch(e){
+     return false;
+   }
+
+ }
 }

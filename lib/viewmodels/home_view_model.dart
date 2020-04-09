@@ -1,5 +1,4 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_provider_arch/core/models/places.dart';
 import 'package:flutter_provider_arch/core/services/home_view_service.dart';
 import 'package:flutter_provider_arch/utils/location_helper.dart';
@@ -52,5 +51,10 @@ class HomeViewViewModel extends BaseViewModel {
 
   Future<void> postData() async {
     await homeViewService.postData();
+  }
+
+  void deleteItem(String id) async {
+   await homeViewService.deleteItem(id);
+   notifyListeners();
   }
 }

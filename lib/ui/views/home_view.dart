@@ -76,13 +76,16 @@ class HomeView extends StatelessWidget {
     return ListView.builder(
       itemCount: model.places.length,
       itemBuilder: (BuildContext context, int index) {
-        return HomeItemTile(model.places[index], onPlaceSelected);
+        return HomeItemTile(
+            model.places[index], onPlaceSelected, onDelete, onUpdate, model);
       },
     );
   }
 
- void onPlaceSelected(Place place, BuildContext context) {
-
-    Navigator.of(context).pushNamed(RoutePaths.PlaceDetail,arguments:place);
+  void onPlaceSelected(Place place, BuildContext context) {
+    Navigator.of(context).pushNamed(RoutePaths.PlaceDetail, arguments: place);
   }
+
+  void onUpdate(Place place, HomeViewViewModel model) {}
+  void onDelete(Place place, HomeViewViewModel model) {}
 }
