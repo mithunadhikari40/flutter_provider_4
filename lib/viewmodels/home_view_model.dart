@@ -21,7 +21,7 @@ class HomeViewViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  insertPlace(String title, String imagePath, LocationData location) async {
+  insertPlace(String title, String imagePath, LocationData location,num rating) async {
     setBusy(true);
 
     String address = await LocationHelper.getAddressFromCoordinates(
@@ -35,7 +35,9 @@ class HomeViewViewModel extends BaseViewModel {
         title: title,
         latitude: location.latitude,
         synced: 0,
-        longitude: location.longitude);
+        longitude: location.longitude,
+        rating: rating
+        );
     homeViewService.insertPlace(place);
     setBusy(false);
   }

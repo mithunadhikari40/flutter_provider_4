@@ -49,9 +49,6 @@ class HomeItemTile extends StatelessWidget {
   void _onDismissed(DismissDirection direction) {
           print("Delete item $direction");
 
-    // if(direction != DismissDirection.horizontal){
-    //   return;
-    // }
     if(direction== DismissDirection.startToEnd){
       print("Delete item");
       // onDelete(place,model);

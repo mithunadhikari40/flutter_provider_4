@@ -34,7 +34,7 @@ class _ImageInputState extends State<ImageInput> {
 
     if (file != null) {
       //todo compress the file
-      file = await ImageHelper.compressImage(file.absolute.path, file);
+      // file = await ImageHelper.compressImage(file.absolute.path, file);
       setState(() {
         image = file;
       });

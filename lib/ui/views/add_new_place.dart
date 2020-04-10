@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_provider_arch/ui/widgets/image_input.dart';
 import 'package:flutter_provider_arch/ui/widgets/location_input.dart';
 import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:location/location.dart';
 
@@ -18,9 +19,10 @@ class _AddNewPlaceState extends State<AddNewPlace> {
   String imagePath;
   LocationData location;
 
+  double userRating=0;
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Add new place'),
@@ -34,6 +36,7 @@ class _AddNewPlaceState extends State<AddNewPlace> {
               onImageTaken: _onImageTaken,
             ),
             LocationInput(onLocationSelected: _onLocationSelected),
+            _buildRatingBar(),
             _buildSaveButton(context)
           ],
         ),
@@ -85,14 +88,33 @@ class _AddNewPlaceState extends State<AddNewPlace> {
   void savePlace(BuildContext context) {
     if (_titleController.text.isEmpty ||
         imagePath == null ||
-        location == null) {
+        location == null||
+        userRating ==0
+        ) {
       Fluttertoast.showToast(msg: "Please fill all the data");
       return;
     }
-    widget.model.insertPlace(_titleController.text, imagePath, location);
+    widget.model.insertPlace(_titleController.text, imagePath, location,userRating);
 
     Navigator.of(context).pop();
   }
 
-   
+  Widget _buildRatingBar() {
+  return  RatingBar(
+   initialRating: 1,
+   minRating: 1,
+   direction: Axis.horizontal,
+   allowHalfRating: true,
+   itemCount: 5,
+   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+   itemBuilder: (context, _) => Icon(
+     Icons.star,
+     color: Colors.amber,
+   ),
+   onRatingUpdate: (rating) {
+    userRating= rating;
+     print(rating);
+   },
+);
+  }
 }

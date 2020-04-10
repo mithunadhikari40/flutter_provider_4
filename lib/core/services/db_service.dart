@@ -15,7 +15,7 @@ class DbService {
   Future _init() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, AppConstants.DB_NAME);
-    db = await openDatabase(path, version: 3,
+    db = await openDatabase(path, version: 4,
         onCreate: (Database newDb, int newVersion) {
       Batch batch = newDb.batch();
       batch.execute("""
@@ -40,13 +40,15 @@ class DbService {
     """);
       batch.execute(
           """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
+      batch.execute(
+          """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN rating REAL""");
 
       batch.commit();
     }, onUpgrade: _onDbUpgrade);
   }
 
   Future<User> fetchUser() async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
     final data = await db.query(AppConstants.USER_TABLE);
@@ -61,10 +63,10 @@ class DbService {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future _onDbUpgrade(Database newDb, int oldVersion, int newVersion) async {
-    Batch batch = newDb.batch();
-    if (oldVersion == 1 && newVersion == 2) {
-      batch.execute("""
+  List<List<String>> getMigrations() {
+    List<List<String>> migrations = [];
+    List<String> migrationOne = [
+      """
           CREATE TABLE ${AppConstants.PLACE_TABLE}
           (
             id TEXT PRIMARY KEY,
@@ -74,18 +76,66 @@ class DbService {
             latitude REAL,
             longitude REAL
           )
-    """);
+    """
+    ];
+    List<String> migrationTwo = [
+      "ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0",
+    ];
+    List<String> migrationThree = [
+      """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN rating REAL"""
+    ];
+    migrations.add(migrationOne);
+    migrations.add(migrationTwo);
+    migrations.add(migrationThree);
+    return migrations;
+  }
+
+  Future _onDbUpgrade(Database newDb, int oldVersion, int newVersion) async {
+    Batch batch = newDb.batch();
+    for (int i = oldVersion; i < newVersion; i++) {
+      getMigrations()[i - 1].forEach((String script) {
+        batch.execute(script);
+      });
     }
-    if (oldVersion == 2 && newVersion == 3) {
-      batch.execute(
-          """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
-    }
+
+    // if (oldVersion == 1 && newVersion == 2) {
+    //   batch.execute("""
+    //       CREATE TABLE ${AppConstants.PLACE_TABLE}
+    //       (
+    //         id TEXT PRIMARY KEY,
+    //         title TEXT,
+    //         address TEXT,
+    //         imagePath TEXT,
+    //         latitude REAL,
+    //         longitude REAL
+    //       )
+    // """);
+    // }
+    // if (oldVersion == 1 && newVersion == 3) {
+    //   batch.execute("""
+    //       CREATE TABLE ${AppConstants.PLACE_TABLE}
+    //       (
+    //         id TEXT PRIMARY KEY,
+    //         title TEXT,
+    //         address TEXT,
+    //         imagePath TEXT,
+    //         latitude REAL,
+    //         longitude REAL
+    //       )
+    // """);
+    //   batch.execute(
+    //       """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
+    // }
+    // if (oldVersion == 2 && newVersion == 3) {
+    //   batch.execute(
+    //       """ALTER TABLE ${AppConstants.PLACE_TABLE} ADD COLUMN synced INTEGER DEFAULT 0 """);
+    // }
 
     batch.commit();
   }
 
   Future<int> insertPlace(Place place) async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
     return db.insert(AppConstants.PLACE_TABLE, place.toJson(),
@@ -93,7 +143,7 @@ class DbService {
   }
 
   Future<Place> fetchPlace(String id) async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
     final data = await db
@@ -105,7 +155,7 @@ class DbService {
   }
 
   Future<List<Place>> fetchAllPlaces() async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
     final data = await db.query(AppConstants.PLACE_TABLE);
@@ -113,18 +163,18 @@ class DbService {
   }
 
   Future<List<Place>> fetchAllUnsyncedPlaces() async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
     final data = await db
         .query(AppConstants.PLACE_TABLE, where: " synced = ? ", whereArgs: [0]);
-        print("The data from local db $data");
+    print("The data from local db $data");
     if (data.length > 0) return Place.allPlaces(data);
     return null;
   }
 
   Future updateData(Place place, String newId) async {
-    if(db == null){
+    if (db == null) {
       await _init();
     }
 //  return db.rawUpdate("UPDATE  ${AppConstants.PLACE_TABLE} SET synced = 1, id = $newId where id = ${place.id}");
@@ -132,8 +182,7 @@ class DbService {
     var oldId = place.id;
     place.id = newId;
     place.synced = 1;
-   return db.update(AppConstants.PLACE_TABLE, place.toJson(),
+    return db.update(AppConstants.PLACE_TABLE, place.toJson(),
         where: 'id = ?', whereArgs: [oldId]);
-
   }
 }

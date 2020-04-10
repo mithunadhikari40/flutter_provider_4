@@ -36,6 +36,8 @@ dependencies:
   dio: ^3.0.9
   flutter_image_compress: ^0.6.5+1
   cached_network_image: ^2.0.0
+  flutter_rating_bar: ^3.0.1+1
+
 
 
 

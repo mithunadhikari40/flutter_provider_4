@@ -1,0 +1,325 @@
+{
+    "geocoded_waypoints": [
+    {
+    "geocoder_status": "OK",
+    "place_id": "ChIJJwVmzzIY6zkR9L2Hz4uu-AY",
+    "types": [
+    "route"
+    ]
+    },
+    {
+    "geocoder_status": "OK",
+    "place_id": "ChIJ7-1TH6UZ6zkRNg80OzdEtvY",
+    "types": [
+    "route"
+    ]
+    }
+    ],
+    "routes": [
+    {
+    "bounds": {
+    "northeast": {
+    "lat": 27.6952204,
+    "lng": 85.3261879
+    },
+    "southwest": {
+    "lat": 27.6718238,
+    "lng": 85.31339489999999
+    }
+    },
+    "copyrights": "Map data ©2020",
+    "legs": [
+    {
+    "distance": {
+    "text": "3.7 km",
+    "value": 3688
+    },
+    "duration": {
+    "text": "12 mins",
+    "value": 700
+    },
+    "end_address": "Unnamed Road, Kathmandu 44600, Nepal",
+    "end_location": {
+    "lat": 27.6952204,
+    "lng": 85.3261879
+    },
+    "start_address": "Uttar Kuna Shanti Bagaicha Rd, Lalitpur 44600, Nepal",
+    "start_location": {
+    "lat": 27.6718238,
+    "lng": 85.3133983
+    },
+    "steps": [
+    {
+    "distance": {
+    "text": "0.1 km",
+    "value": 103
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 22
+    },
+    "end_location": {
+    "lat": 27.6726768,
+    "lng": 85.3135745
+    },
+    "html_instructions": "Head <b>northeast</b>",
+    "polyline": {
+    "points": "{s{gDwwugOeAg@SKEAC?A?C?A?A?C@C@GDC@E@A@C?C?A?WB"
+    },
+    "start_location": {
+    "lat": 27.6718238,
+    "lng": 85.3133983
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.1 km",
+    "value": 109
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 36
+    },
+    "end_location": {
+    "lat": 27.6732524,
+    "lng": 85.3140048
+    },
+    "html_instructions": "At the roundabout, take the <b>3rd</b> exit onto <b>Jawalakhel Rd</b>",
+    "maneuver": "roundabout-left",
+    "polyline": {
+    "points": "gy{gDyxugO?@?BA@?BA@?BA@A@ABCBE@C@G@G??AC?CACAAACACCAAACAA?CAC?A?C?C?A?Ck@kA"
+    },
+    "start_location": {
+    "lat": 27.6726768,
+    "lng": 85.3135745
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.6 km",
+    "value": 582
+    },
+    "duration": {
+    "text": "2 mins",
+    "value": 127
+    },
+    "end_location": {
+    "lat": 27.6779211,
+    "lng": 85.3162693
+    },
+    "html_instructions": "<b>Jawalakhel Rd</b> turns slightly <b>left</b> and becomes <b>Pulchowk Rd</b>",
+    "polyline": {
+    "points": "y|{gDo{ugOe@[sA]eCq@KIo@e@aDiD]Qi@OkAYKCu@[a@Si@MIACAm@A]B_@BW?SC"
+    },
+    "start_location": {
+    "lat": 27.6732524,
+    "lng": 85.3140048
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.7 km",
+    "value": 695
+    },
+    "duration": {
+    "text": "2 mins",
+    "value": 108
+    },
+    "end_location": {
+    "lat": 27.6837347,
+    "lng": 85.3187111
+    },
+    "html_instructions": "Continue onto <b>Pulchowk Rd</b>",
+    "polyline": {
+    "points": "_z|gDuivgOoBg@oBi@MGsAc@}Ac@OGgA[oA_@s@S[Ki@Q_Bg@{@[[Oi@_@KIQMSMCCg@]i@K_@C[Aa@A"
+    },
+    "start_location": {
+    "lat": 27.6779211,
+    "lng": 85.3162693
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.8 km",
+    "value": 848
+    },
+    "duration": {
+    "text": "2 mins",
+    "value": 143
+    },
+    "end_location": {
+    "lat": 27.6902646,
+    "lng": 85.3174221
+    },
+    "html_instructions": "Continue onto <b>Kupondole Rd</b>",
+    "polyline": {
+    "points": "i~}gD}xvgOE?O@]@c@Bi@DS@a@BSFSH_@RC@o@^c@TWNaAl@OFmAp@y@b@QJA@OHGD}@l@_Aj@YVQXADQVUTi@POJIDMDKBM?YEMCKGQMUQCAw@o@kEsD"
+    },
+    "start_location": {
+    "lat": 27.6837347,
+    "lng": 85.3187111
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "70 m",
+    "value": 70
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 12
+    },
+    "end_location": {
+    "lat": 27.690741,
+    "lng": 85.3171497
+    },
+    "html_instructions": "Keep <b>left</b> to continue on <b>Tripura Marg</b>",
+    "maneuver": "keep-left",
+    "polyline": {
+    "points": "cg_hD{pvgOUEGAEAK@I@C@A@CBGFCHCFADAFAB?@A@?@A??@A?"
+    },
+    "start_location": {
+    "lat": 27.6902646,
+    "lng": 85.3174221
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.5 km",
+    "value": 490
+    },
+    "duration": {
+    "text": "2 mins",
+    "value": 102
+    },
+    "end_location": {
+    "lat": 27.6944109,
+    "lng": 85.31965919999999
+    },
+    "html_instructions": "Turn <b>right</b> at <b>त्रिपुरा मार्ग</b>",
+    "maneuver": "turn-right",
+    "polyline": {
+    "points": "cj_hDeovgOA??AAA?A?A?CAKAIAKGKACCECCECCAEEQSKCq@UKG[M{@[{@]AAy@[KE[Mo@WwAk@CAECaAk@OKg@[w@o@Yc@"
+    },
+    "start_location": {
+    "lat": 27.690741,
+    "lng": 85.3171497
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "79 m",
+    "value": 79
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 16
+    },
+    "end_location": {
+    "lat": 27.6947745,
+    "lng": 85.3203387
+    },
+    "html_instructions": "Continue onto <b>Thapathali Road</b>",
+    "polyline": {
+    "points": "aa`hD{~vgOUY]_ASm@"
+    },
+    "start_location": {
+    "lat": 27.6944109,
+    "lng": 85.31965919999999
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "64 m",
+    "value": 64
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 14
+    },
+    "end_location": {
+    "lat": 27.6951076,
+    "lng": 85.3208568
+    },
+    "html_instructions": "At the roundabout, take the <b>1st</b> exit onto <b>Putalisadak</b>",
+    "maneuver": "roundabout-left",
+    "polyline": {
+    "points": "ic`hDccwgOYk@c@y@EA"
+    },
+    "start_location": {
+    "lat": 27.6947745,
+    "lng": 85.3203387
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.5 km",
+    "value": 505
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 81
+    },
+    "end_location": {
+    "lat": 27.6939771,
+    "lng": 85.32581499999999
+    },
+    "html_instructions": "Turn <b>right</b> onto <b>Tanka Prasad Ghumti Sadak</b>",
+    "maneuver": "turn-right",
+    "polyline": {
+    "points": "me`hDkfwgOb@{C~@kHr@{Fh@uDFi@H]L]"
+    },
+    "start_location": {
+    "lat": 27.6951076,
+    "lng": 85.3208568
+    },
+    "travel_mode": "DRIVING"
+    },
+    {
+    "distance": {
+    "text": "0.1 km",
+    "value": 143
+    },
+    "duration": {
+    "text": "1 min",
+    "value": 39
+    },
+    "end_location": {
+    "lat": 27.6952204,
+    "lng": 85.3261879
+    },
+    "html_instructions": "Turn <b>left</b><div>Destination will be on the left</div>",
+    "maneuver": "turn-left",
+    "polyline": {
+    "points": "k~_hDkexgOQIkASg@ME?g@Kg@I[G"
+    },
+    "start_location": {
+    "lat": 27.6939771,
+    "lng": 85.32581499999999
+    },
+    "travel_mode": "DRIVING"
+    }
+    ],
+    "traffic_speed_entry": [ ],
+    "via_waypoint": [ ]
+    }
+    ],
+    "overview_polyline": {
+    "points": """{s{gDwwugOcBu@I?SJOBYB?DCJIJIBO@KEKIEM?Kk@oAe@[sA]eCq@KIo@e@aDiDgAa@wA]wAo@s@Oq@C}@FW?SC_FqAoEwAgF{AiCy@wAk@{AeAk@a@iAOcAC{BLu@Dg@PwBjAwDvB}Az@eAr@_Aj@YVS^QVUTy@\WJYBg@Iw@i@cGcF]GQ?MBEDKPIXCDC?AICUIWOQIGQSKC}@]wAi@cCaAgDsA_CwAw@o@Yc@UYq@mB}@eBEAb@{C~@kH|AqLPgAL]QIsBa@qB]"""
+    },
+    "summary": "Pulchowk Rd",
+    "warnings": [ ],
+    "waypoint_order": [ ]
+    }
+    ],
+    "status": "OK"
+    }

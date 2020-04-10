@@ -42,6 +42,7 @@ class PlaceDetailView extends StatelessWidget {
               <Widget>[
                 _buildBox(),
                 _buildAddressSection(),
+                _buildRatingSection(),
                 _buildMapSection(context),
               ],
             ),
@@ -63,6 +64,15 @@ class PlaceDetailView extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         place.address,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+      ),
+    );
+  }
+   Widget _buildRatingSection() {
+    return Container(
+      alignment: Alignment.center,
+      child: Text(
+        "${place.rating} out of 5",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
       ),
     );

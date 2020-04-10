@@ -6,6 +6,7 @@ class Place {
   double latitude;
   double longitude;
   int synced = 0;
+  num rating;
 
   Place(
       {this.id,
@@ -13,7 +14,9 @@ class Place {
       this.address,
       this.imagePath,
       this.latitude,
-      this.longitude,this.synced});
+      this.longitude,
+      this.synced,
+      this.rating});
 
   Place.fromJson(Map<String, dynamic> map) {
     id = map["id"];
@@ -22,10 +25,11 @@ class Place {
     imagePath = map["imagePath"];
     latitude = map["latitude"];
     longitude = map["longitude"];
-    synced= map["synced"];
+    synced = map["synced"];
+    rating = map["rating"] ?? 0;
   }
 
-Map<String,dynamic>  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "id": id,
       "title": title,
@@ -34,14 +38,15 @@ Map<String,dynamic>  toJson() {
       "latitude": latitude,
       "longitude": longitude,
       "synced": synced,
+      "rating": rating ?? 0,
     };
   }
 
-  static List<Place> allPlaces (data){
+  static List<Place> allPlaces(data) {
     return data
-       .cast<Map<String, dynamic>>()
-       .map((obj) => Place.fromJson(obj))
-       .toList()
-       .cast<Place>();
+        .cast<Map<String, dynamic>>()
+        .map((obj) => Place.fromJson(obj))
+        .toList()
+        .cast<Place>();
   }
 }
