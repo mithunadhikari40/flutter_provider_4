@@ -61,7 +61,8 @@ class HomeViewService {
   Future deleteItem(String id) async {
     Place place = _places.firstWhere((el)=>el.id==id);
     int index = _places.indexOf(place);
-          _places.removeAt(index);
+    
+    _places.removeAt(index);
 
     final isDeleted = await api.deleteItem(id);
     if(isDeleted){

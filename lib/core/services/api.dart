@@ -33,12 +33,16 @@ class Api {
   Future<List<Place>> getAllPlace() async {
     try {
       var response = await http.get(root);
-      print("Response from server ${response.body}");
       if (response == null || response.body == null) {
         return null;
       }
       Map<String, dynamic> data = jsonDecode(response.body);
       var values = data.values.toList();
+      var keys= data.keys.toList();
+      for(int i =0;i<values.length;i++){
+        values[i]["id"]= keys[i];
+      }
+
       print("the decoded data $values");
 
       return Place.allPlaces(values);
@@ -84,9 +88,10 @@ class Api {
   }
 
  Future<bool> deleteItem(String id) async {
-   final deleteUrl ="https://recommend-places-fd237.firebaseio.com/places/$id.json";
+   print("the delete id is $id");
+   final deleteUrl ="https://recommend-places-fd237.firebaseisdkljdfo.com/places/$id.json";
    try{
-     final response = await http.delete(deleteUrl,);
+     final response = await http.delete(deleteUrl);
      print("The delete response ${response.body}");
      if(response.statusCode == 200){
        return true;

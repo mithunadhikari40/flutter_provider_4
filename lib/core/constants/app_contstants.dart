@@ -8,13 +8,12 @@ class RoutePaths {
   static const String AddNewPlace = 'add_new_place';
   static const String MapInput = 'map_input';
   static const String PlaceDetail ='place_detail';
-  
 }
 
 class AppConstants{
   static const String USER_TABLE = 'users';
   static const String PLACE_TABLE = 'places';
-  static const String DB_NAME = 'places2233.db';
+  static const String DB_NAME = 'places2ewrwr3.db';
   static const String LOGIN_KEY ='login_key';
 
 }
