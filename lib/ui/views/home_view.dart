@@ -132,8 +132,8 @@ _firebaseMessaging.configure(
             'Notification body', platformChannelSpecifics,
             payload: 'item x');
 
-        // Navigator.of(context)
-        //     .pushNamed(RoutePaths.AddNewPlace, arguments: model);
+        Navigator.of(context)
+            .pushNamed(RoutePaths.AddNewPlace, arguments: model);
       },
     );
   }
@@ -163,7 +163,7 @@ _firebaseMessaging.configure(
 
   Future onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
-        
+
       }
 
   Future selectNotification(String payload) async {
