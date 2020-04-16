@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,10 +9,20 @@ import 'package:flutter_provider_arch/ui/widgets/home_item_tile.dart';
 import 'package:flutter_provider_arch/viewmodels/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  BannerAd _bannerAd;
+
+  String testDevice = 'ca-app-pub-8019677807058495/1820085922';
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-   final  FirebaseMessaging  _firebaseMessaging = FirebaseMessaging();
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +63,23 @@ class HomeView extends StatelessWidget {
   Widget _buildThemeIcon(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.theaters),
-      onPressed: () {},
+      onPressed: () {
+        _bannerAd ??= createBannerAd();
+        _bannerAd
+          ..load()
+          ..show(horizontalCenterOffset: -50, anchorOffset: 100);
+      },
     );
   }
 
   _onModelReady(HomeViewViewModel model) async {
+    var addId = FirebaseAdMob.testAppId;
+    print("My test id is ${addId}");
 
-
-
+    _initializeAdd();
 
     ///notification initialization --
-// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -75,22 +92,20 @@ class HomeView extends StatelessWidget {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
 
-
-
-
-_firebaseMessaging.configure(
+    _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
+        showNotification(message["notification"]["title"], message["notification"]["body"], message["notification"]);
         print("onMessage: $message");
-        
       },
-       onLaunch: (Map<String, dynamic> message) async {
+      onLaunch: (Map<String, dynamic> message) async {
+        showNotification(message["notification"]["title"], message["notification"]["body"], message["notification"]);
+
         print("onLaunch: $message");
-        
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        showNotification(message["notification"]["title"], message["notification"]["body"], message["notification"]);
 
-        
+        print("onResume: $message");
       },
     );
 
@@ -102,12 +117,8 @@ _firebaseMessaging.configure(
       print("Settings registered: $settings");
     });
     _firebaseMessaging.getToken().then((String token) {
-      
-     
       print("Firebase token $token");
     });
-
-
 
     model.getAllPlaces();
     //initial data fetching
@@ -118,24 +129,25 @@ _firebaseMessaging.configure(
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () async {
-        var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-          'your channel id',
-          'your channel name',
-          'your channel description',
-          importance: Importance.Max,
-          priority: Priority.High,
-        );
-        var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-        var platformChannelSpecifics = NotificationDetails(
-            androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-        await flutterLocalNotificationsPlugin.show(0,'Notification title',
-            'Notification body', platformChannelSpecifics,
-            payload: 'item x');
-
         Navigator.of(context)
             .pushNamed(RoutePaths.AddNewPlace, arguments: model);
       },
     );
+  }
+
+  void showNotification(String title, String text, String payload) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      'your channel description',
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin
+        .show(0, title, text, platformChannelSpecifics, payload: payload);
   }
 
   Widget _buildBody(HomeViewViewModel model, BuildContext context) {
@@ -159,14 +171,43 @@ _firebaseMessaging.configure(
   }
 
   void onUpdate(Place place, HomeViewViewModel model) {}
+
   void onDelete(Place place, HomeViewViewModel model) {}
 
   Future onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
-
-      }
+      int id, String title, String body, String payload) async {}
 
   Future selectNotification(String payload) async {
     print("selcet notification payload $payload");
+  }
+
+  MobileAdTargetingInfo getTargetInfo() => MobileAdTargetingInfo(
+        testDevices: testDevice != null ? <String>[testDevice] : null,
+        keywords: <String>['foo', 'bar'],
+        contentUrl: 'http://foo.com/bar.html',
+        childDirected: true,
+        nonPersonalizedAds: true,
+      );
+
+  BannerAd createBannerAd() {
+    return BannerAd(
+      adUnitId: BannerAd.testAdUnitId,
+      size: AdSize.banner,
+      targetingInfo: getTargetInfo(),
+      listener: (MobileAdEvent event) {
+        print("BannerAd event $event");
+      },
+    );
+  }
+
+  void _initializeAdd() {
+    FirebaseAdMob.instance
+        .initialize(appId: "ca-app-pub-8019677807058495~8034140487");
+    _bannerAd = createBannerAd()..load();
+    RewardedVideoAd.instance.listener =
+        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+      print("RewardedVideoAd event $event");
+      if (event == RewardedVideoAdEvent.rewarded) {}
+    };
   }
 }

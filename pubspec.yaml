@@ -39,6 +39,8 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   flutter_local_notifications: ^1.4.1
   firebase_messaging: ^6.0.13
+  firebase_admob: ^0.9.3+1
+
 
 
 
