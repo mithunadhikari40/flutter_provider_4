@@ -12,14 +12,14 @@ class HomeItemTile extends StatelessWidget {
   final Function(Place, BuildContext) onPlaceTap;
   final Function(Place, HomeViewViewModel) onDelete;
   final Function(Place,HomeViewViewModel) onUpdate;
-  final Key _key = GlobalKey();
+  final Key _key =  GlobalKey();
   HomeItemTile(this.place, this.onPlaceTap,this.onDelete,this.onUpdate,this.model);
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: _key,
-      background: Container(
-        color: Colors.red,
+      background:  Container(
+        color:  Colors.red,
       ),
       secondaryBackground: Container(
         color: Colors.green,
@@ -30,7 +30,7 @@ class HomeItemTile extends StatelessWidget {
         onTap: () {
           onPlaceTap(place, context);
         },
-        title: Text(place.title),
+        title:  Text(place.title),
         subtitle: Text(place.address),
         leading: Hero(
           tag: place.id,

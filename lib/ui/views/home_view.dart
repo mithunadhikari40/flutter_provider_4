@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> {
       builder: (BuildContext context, HomeViewViewModel model, Widget child) {
         return Scaffold(
             appBar: AppBar(
-              title: Text("Awesome places"),
+              title: const Text("Awesome places"),
               centerTitle: true,
               actions: <Widget>[
                 _buildSyncIcon(context, model),
@@ -47,13 +47,13 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildSyncIcon(BuildContext context, HomeViewViewModel model) {
     if (!model.isConnected) {
-      return IconButton(
-        icon: Icon(Icons.sync_disabled),
+      return const IconButton(
+        icon: const Icon(Icons.sync_disabled),
         onPressed: null,
       );
     }
-    return IconButton(
-      icon: Icon(Icons.sync),
+    return  IconButton(
+      icon: const Icon(Icons.sync),
       onPressed: () {
         model.postData();
       },
