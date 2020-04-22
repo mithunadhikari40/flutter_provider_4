@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "292722298529",
-    "firebase_url": "https://recommend-places-fd237.firebaseio.com",
-    "project_id": "recommend-places-fd237",
-    "storage_bucket": "recommend-places-fd237.appspot.com"
+    "project_number": "621988857961",
+    "firebase_url": "https://recommend-places-e8772.firebaseio.com",
+    "project_id": "recommend-places-e8772",
+    "storage_bucket": "recommend-places-e8772.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:292722298529:android:64013fd50c90dcee392ae0",
+        "mobilesdk_app_id": "1:621988857961:android:cde8565427763e0994faf8",
         "android_client_info": {
-          "package_name": "com.example.flutter_provider_arch"
+          "package_name": "com.broadwayinfosys.flutter_provider_arch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "292722298529-s2stn6mchk0rpr8heb6opdgbplnkgp94.apps.googleusercontent.com",
+          "client_id": "621988857961-i7tkerppho8ig6io0o16sj8pd044j3cv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.flutter_provider_arch",
+            "package_name": "com.broadwayinfosys.flutter_provider_arch",
             "certificate_hash": "3b7de9911efedd990c7ca1c6ae8966544ff2579b"
           }
         },
         {
-          "client_id": "292722298529-rlufl1758e7l9dvme52sbia6l9u1jddd.apps.googleusercontent.com",
+          "client_id": "621988857961-fglpcp9o0g8blhghcsg7ptu4fjda3nfc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6BQ4W0kqIh5JG7ONYC_xLX47P-uC2c80"
+          "current_key": "AIzaSyD2WkBXvHXrvZ3mS-voWosmvhC20GgBLa0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "292722298529-rlufl1758e7l9dvme52sbia6l9u1jddd.apps.googleusercontent.com",
+              "client_id": "621988857961-fglpcp9o0g8blhghcsg7ptu4fjda3nfc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
